@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mbg.TCashFlowStatementDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.mbg.TCashFlowStatement">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="c_id" jdbcType="VARCHAR" property="cId" />
+    <result column="c_year" jdbcType="VARCHAR" property="cYear" />
+    <result column="net_cash_flow_frow_from_operating_activities" jdbcType="BIGINT" property="netCashFlowFrowFromOperatingActivities" />
+    <result column="net_cash_flows_from_investing_activities" jdbcType="BIGINT" property="netCashFlowsFromInvestingActivities" />
+    <result column="net_cash_flows_from_financing_activities" jdbcType="BIGINT" property="netCashFlowsFromFinancingActivities" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, c_id, c_year, net_cash_flow_frow_from_operating_activities, net_cash_flows_from_investing_activities, 
+    net_cash_flows_from_financing_activities
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_cash_flow_statement
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCompanyCode" parameterType="java.lang.String" resultType="com.example.demo.mbg.TCashFlowStatement">
+    select
+    id, c_id as cId, c_year as cYear,
+    net_cash_flow_frow_from_operating_activities as netCashFlowFrowFromOperatingActivities,
+    net_cash_flows_from_investing_activities as netCashFlowsFromInvestingActivities,
+    net_cash_flows_from_financing_activities as netCashFlowsFromFinancingActivities
+    from t_cash_flow_statement
+    where c_id = #{companyCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_cash_flow_statement
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.demo.mbg.TCashFlowStatement" useGeneratedKeys="true">
+    insert into t_cash_flow_statement (c_id, c_year, net_cash_flow_frow_from_operating_activities, 
+      net_cash_flows_from_investing_activities, net_cash_flows_from_financing_activities
+      )
+    values (#{cId,jdbcType=VARCHAR}, #{cYear,jdbcType=VARCHAR}, #{netCashFlowFrowFromOperatingActivities,jdbcType=BIGINT}, 
+      #{netCashFlowsFromInvestingActivities,jdbcType=BIGINT}, #{netCashFlowsFromFinancingActivities,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.mbg.TCashFlowStatement" useGeneratedKeys="true">
+    insert into t_cash_flow_statement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cYear != null">
+        c_year,
+      </if>
+      <if test="netCashFlowFrowFromOperatingActivities != null">
+        net_cash_flow_frow_from_operating_activities,
+      </if>
+      <if test="netCashFlowsFromInvestingActivities != null">
+        net_cash_flows_from_investing_activities,
+      </if>
+      <if test="netCashFlowsFromFinancingActivities != null">
+        net_cash_flows_from_financing_activities,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="cYear != null">
+        #{cYear,jdbcType=VARCHAR},
+      </if>
+      <if test="netCashFlowFrowFromOperatingActivities != null">
+        #{netCashFlowFrowFromOperatingActivities,jdbcType=BIGINT},
+      </if>
+      <if test="netCashFlowsFromInvestingActivities != null">
+        #{netCashFlowsFromInvestingActivities,jdbcType=BIGINT},
+      </if>
+      <if test="netCashFlowsFromFinancingActivities != null">
+        #{netCashFlowsFromFinancingActivities,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mbg.TCashFlowStatement">
+    update t_cash_flow_statement
+    <set>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="cYear != null">
+        c_year = #{cYear,jdbcType=VARCHAR},
+      </if>
+      <if test="netCashFlowFrowFromOperatingActivities != null">
+        net_cash_flow_frow_from_operating_activities = #{netCashFlowFrowFromOperatingActivities,jdbcType=BIGINT},
+      </if>
+      <if test="netCashFlowsFromInvestingActivities != null">
+        net_cash_flows_from_investing_activities = #{netCashFlowsFromInvestingActivities,jdbcType=BIGINT},
+      </if>
+      <if test="netCashFlowsFromFinancingActivities != null">
+        net_cash_flows_from_financing_activities = #{netCashFlowsFromFinancingActivities,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mbg.TCashFlowStatement">
+    update t_cash_flow_statement
+    set c_id = #{cId,jdbcType=VARCHAR},
+      c_year = #{cYear,jdbcType=VARCHAR},
+      net_cash_flow_frow_from_operating_activities = #{netCashFlowFrowFromOperatingActivities,jdbcType=BIGINT},
+      net_cash_flows_from_investing_activities = #{netCashFlowsFromInvestingActivities,jdbcType=BIGINT},
+      net_cash_flows_from_financing_activities = #{netCashFlowsFromFinancingActivities,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

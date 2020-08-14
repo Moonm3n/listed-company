@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mbg.TUsrDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.mbg.TUsr">
+    <id column="usr_id" jdbcType="INTEGER" property="usrId" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="usr_name" jdbcType="VARCHAR" property="usrName" />
+    <result column="gender" jdbcType="BOOLEAN" property="gender" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="mailbox" jdbcType="VARCHAR" property="mailbox" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="tel" jdbcType="CHAR" property="tel" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="work_unit" jdbcType="VARCHAR" property="workUnit" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    usr_id, `password`, usr_name, gender, age, mailbox, qq, tel, `location`, work_unit, 
+    introduction
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_usr
+    where usr_id = #{usrId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_usr
+    where usr_name =  #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_usr
+    where usr_id = #{usrId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="usr_id" keyProperty="usrId" parameterType="com.example.demo.mbg.TUsr" useGeneratedKeys="true">
+    insert into t_usr (`password`, usr_name, gender, 
+      age, mailbox, qq, tel, 
+      `location`, work_unit, introduction
+      )
+    values (#{password,jdbcType=VARCHAR}, #{usrName,jdbcType=VARCHAR}, #{gender,jdbcType=BOOLEAN}, 
+      #{age,jdbcType=INTEGER}, #{mailbox,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{tel,jdbcType=CHAR}, 
+      #{location,jdbcType=VARCHAR}, #{workUnit,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="usr_id" keyProperty="usrId" parameterType="com.example.demo.mbg.TUsr" useGeneratedKeys="true">
+    insert into t_usr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="usrName != null">
+        usr_name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="mailbox != null">
+        mailbox,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="location != null">
+        `location`,
+      </if>
+      <if test="workUnit != null">
+        work_unit,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="usrName != null">
+        #{usrName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=BOOLEAN},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="mailbox != null">
+        #{mailbox,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=CHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null">
+        #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mbg.TUsr">
+    update t_usr
+    <set>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="usrName != null">
+        usr_name = #{usrName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=BOOLEAN},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="mailbox != null">
+        mailbox = #{mailbox,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=CHAR},
+      </if>
+      <if test="location != null">
+        `location` = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null">
+        work_unit = #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where usr_id = #{usrId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mbg.TUsr">
+    update t_usr
+    set `password` = #{password,jdbcType=VARCHAR},
+      usr_name = #{usrName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BOOLEAN},
+      age = #{age,jdbcType=INTEGER},
+      mailbox = #{mailbox,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=CHAR},
+      `location` = #{location,jdbcType=VARCHAR},
+      work_unit = #{workUnit,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR}
+    where usr_id = #{usrId,jdbcType=INTEGER}
+  </update>
+</mapper>

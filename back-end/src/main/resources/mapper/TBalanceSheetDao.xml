@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mbg.TBalanceSheetDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.mbg.TBalanceSheet">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="b_year" jdbcType="VARCHAR" property="bYear" />
+    <result column="total_liabilities" jdbcType="BIGINT" property="totalLiabilities" />
+    <result column="average_inventory" jdbcType="BIGINT" property="averageInventory" />
+    <result column="average_accounts_receivable" jdbcType="BIGINT" property="averageAccountsReceivable" />
+    <result column="average_paid_in_capital" jdbcType="BIGINT" property="averagePaidInCapital" />
+    <result column="average_owner_equity" jdbcType="BIGINT" property="averageOwnerEquity" />
+    <result column="total_current_liabikities" jdbcType="BIGINT" property="totalCurrentLiabikities" />
+    <result column="average_current_assets" jdbcType="BIGINT" property="averageCurrentAssets" />
+    <result column="average_total_assets" jdbcType="BIGINT" property="averageTotalAssets" />
+    <result column="c_id" jdbcType="VARCHAR" property="cId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, b_year, total_liabilities, average_inventory, average_accounts_receivable, average_paid_in_capital, 
+    average_owner_equity, total_current_liabikities, average_current_assets, average_total_assets, 
+    c_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_balance_sheet
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectByCompanyCode" parameterType="java.lang.String" resultType="com.example.demo.mbg.TBalanceSheet">
+      select
+        id, b_year as bYear, total_liabilities as totalLiabilities, average_inventory as averageInventory,
+        average_accounts_receivable as averageAccountsReceivable, average_paid_in_capital as averagePaidInCapital,
+        average_owner_equity as averageOwnerEquity, total_current_liabikities as totalCurrentLiabikities,
+        average_current_assets as averageCurrentAssets, average_total_assets as averageTotalAssets, c_id as cId
+      from t_balance_sheet
+      where c_id = #{companyCode,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_balance_sheet
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.demo.mbg.TBalanceSheet" useGeneratedKeys="true">
+    insert into t_balance_sheet (b_year, total_liabilities, average_inventory, 
+      average_accounts_receivable, average_paid_in_capital, 
+      average_owner_equity, total_current_liabikities, 
+      average_current_assets, average_total_assets, 
+      c_id)
+    values (#{bYear,jdbcType=VARCHAR}, #{totalLiabilities,jdbcType=BIGINT}, #{averageInventory,jdbcType=BIGINT}, 
+      #{averageAccountsReceivable,jdbcType=BIGINT}, #{averagePaidInCapital,jdbcType=BIGINT}, 
+      #{averageOwnerEquity,jdbcType=BIGINT}, #{totalCurrentLiabikities,jdbcType=BIGINT}, 
+      #{averageCurrentAssets,jdbcType=BIGINT}, #{averageTotalAssets,jdbcType=BIGINT}, 
+      #{cId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.mbg.TBalanceSheet" useGeneratedKeys="true">
+    insert into t_balance_sheet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bYear != null">
+        b_year,
+      </if>
+      <if test="totalLiabilities != null">
+        total_liabilities,
+      </if>
+      <if test="averageInventory != null">
+        average_inventory,
+      </if>
+      <if test="averageAccountsReceivable != null">
+        average_accounts_receivable,
+      </if>
+      <if test="averagePaidInCapital != null">
+        average_paid_in_capital,
+      </if>
+      <if test="averageOwnerEquity != null">
+        average_owner_equity,
+      </if>
+      <if test="totalCurrentLiabikities != null">
+        total_current_liabikities,
+      </if>
+      <if test="averageCurrentAssets != null">
+        average_current_assets,
+      </if>
+      <if test="averageTotalAssets != null">
+        average_total_assets,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bYear != null">
+        #{bYear,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLiabilities != null">
+        #{totalLiabilities,jdbcType=BIGINT},
+      </if>
+      <if test="averageInventory != null">
+        #{averageInventory,jdbcType=BIGINT},
+      </if>
+      <if test="averageAccountsReceivable != null">
+        #{averageAccountsReceivable,jdbcType=BIGINT},
+      </if>
+      <if test="averagePaidInCapital != null">
+        #{averagePaidInCapital,jdbcType=BIGINT},
+      </if>
+      <if test="averageOwnerEquity != null">
+        #{averageOwnerEquity,jdbcType=BIGINT},
+      </if>
+      <if test="totalCurrentLiabikities != null">
+        #{totalCurrentLiabikities,jdbcType=BIGINT},
+      </if>
+      <if test="averageCurrentAssets != null">
+        #{averageCurrentAssets,jdbcType=BIGINT},
+      </if>
+      <if test="averageTotalAssets != null">
+        #{averageTotalAssets,jdbcType=BIGINT},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mbg.TBalanceSheet">
+    update t_balance_sheet
+    <set>
+      <if test="bYear != null">
+        b_year = #{bYear,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLiabilities != null">
+        total_liabilities = #{totalLiabilities,jdbcType=BIGINT},
+      </if>
+      <if test="averageInventory != null">
+        average_inventory = #{averageInventory,jdbcType=BIGINT},
+      </if>
+      <if test="averageAccountsReceivable != null">
+        average_accounts_receivable = #{averageAccountsReceivable,jdbcType=BIGINT},
+      </if>
+      <if test="averagePaidInCapital != null">
+        average_paid_in_capital = #{averagePaidInCapital,jdbcType=BIGINT},
+      </if>
+      <if test="averageOwnerEquity != null">
+        average_owner_equity = #{averageOwnerEquity,jdbcType=BIGINT},
+      </if>
+      <if test="totalCurrentLiabikities != null">
+        total_current_liabikities = #{totalCurrentLiabikities,jdbcType=BIGINT},
+      </if>
+      <if test="averageCurrentAssets != null">
+        average_current_assets = #{averageCurrentAssets,jdbcType=BIGINT},
+      </if>
+      <if test="averageTotalAssets != null">
+        average_total_assets = #{averageTotalAssets,jdbcType=BIGINT},
+      </if>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mbg.TBalanceSheet">
+    update t_balance_sheet
+    set b_year = #{bYear,jdbcType=VARCHAR},
+      total_liabilities = #{totalLiabilities,jdbcType=BIGINT},
+      average_inventory = #{averageInventory,jdbcType=BIGINT},
+      average_accounts_receivable = #{averageAccountsReceivable,jdbcType=BIGINT},
+      average_paid_in_capital = #{averagePaidInCapital,jdbcType=BIGINT},
+      average_owner_equity = #{averageOwnerEquity,jdbcType=BIGINT},
+      total_current_liabikities = #{totalCurrentLiabikities,jdbcType=BIGINT},
+      average_current_assets = #{averageCurrentAssets,jdbcType=BIGINT},
+      average_total_assets = #{averageTotalAssets,jdbcType=BIGINT},
+      c_id = #{cId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mbg.TIncomeStatementDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.mbg.TIncomeStatement">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="i_year" jdbcType="VARCHAR" property="iYear" />
+    <result column="cost_of_sales" jdbcType="BIGINT" property="costOfSales" />
+    <result column="operating_costs" jdbcType="BIGINT" property="operatingCosts" />
+    <result column="operating_profits" jdbcType="BIGINT" property="operatingProfits" />
+    <result column="operating_income" jdbcType="BIGINT" property="operatingIncome" />
+    <result column="netprofit" jdbcType="BIGINT" property="netprofit" />
+    <result column="c_id" jdbcType="VARCHAR" property="cId" />
+  </resultMap>
+
+  <!--MyBatis generator-->
+  <sql id="Base_Column_List">
+    id, i_year, cost_of_sales, operating_costs, operating_profits,
+    operating_income, netprofit, c_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_income_statement
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCompanyCode" parameterType="java.lang.String" resultType="com.example.demo.mbg.TIncomeStatement" >
+    select
+    id, i_year as iYear, cost_of_sales as costOfSales, operating_costs as operatingCosts,
+    operating_profits as operatingProfits, operating_income as operatingIncome, netprofit, c_id as cId
+    from t_income_statement
+    where c_id = #{companyCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_income_statement
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.demo.mbg.TIncomeStatement" useGeneratedKeys="true">
+    insert into t_income_statement (i_year, cost_of_sales,
+      operating_costs, operating_profits, operating_income, 
+      netprofit, c_id)
+    values (#{iYear,jdbcType=VARCHAR}, #{costOfSales,jdbcType=BIGINT}, #{netprofitMargin,jdbcType=BIGINT}, 
+      #{operatingCosts,jdbcType=BIGINT}, #{operatingProfits,jdbcType=BIGINT}, #{operatingIncome,jdbcType=BIGINT}, 
+      #{netprofit,jdbcType=BIGINT}, #{cId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.mbg.TIncomeStatement" useGeneratedKeys="true">
+    insert into t_income_statement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iYear != null">
+        i_year,
+      </if>
+      <if test="costOfSales != null">
+        cost_of_sales,
+      </if>
+      <if test="operatingCosts != null">
+        operating_costs,
+      </if>
+      <if test="operatingProfits != null">
+        operating_profits,
+      </if>
+      <if test="operatingIncome != null">
+        operating_income,
+      </if>
+      <if test="netprofit != null">
+        netprofit,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iYear != null">
+        #{iYear,jdbcType=VARCHAR},
+      </if>
+      <if test="costOfSales != null">
+        #{costOfSales,jdbcType=BIGINT},
+      </if>
+      <if test="netprofitMargin != null">
+        #{netprofitMargin,jdbcType=BIGINT},
+      </if>
+      <if test="operatingCosts != null">
+        #{operatingCosts,jdbcType=BIGINT},
+      </if>
+      <if test="operatingProfits != null">
+        #{operatingProfits,jdbcType=BIGINT},
+      </if>
+      <if test="operatingIncome != null">
+        #{operatingIncome,jdbcType=BIGINT},
+      </if>
+      <if test="netprofit != null">
+        #{netprofit,jdbcType=BIGINT},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mbg.TIncomeStatement">
+    update t_income_statement
+    <set>
+      <if test="iYear != null">
+        i_year = #{iYear,jdbcType=VARCHAR},
+      </if>
+      <if test="costOfSales != null">
+        cost_of_sales = #{costOfSales,jdbcType=BIGINT},
+      </if>
+      <if test="operatingCosts != null">
+        operating_costs = #{operatingCosts,jdbcType=BIGINT},
+      </if>
+      <if test="operatingProfits != null">
+        operating_profits = #{operatingProfits,jdbcType=BIGINT},
+      </if>
+      <if test="operatingIncome != null">
+        operating_income = #{operatingIncome,jdbcType=BIGINT},
+      </if>
+      <if test="netprofit != null">
+        netprofit = #{netprofit,jdbcType=BIGINT},
+      </if>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mbg.TIncomeStatement">
+    update t_income_statement
+    set i_year = #{iYear,jdbcType=VARCHAR},
+      cost_of_sales = #{costOfSales,jdbcType=BIGINT},
+      operating_costs = #{operatingCosts,jdbcType=BIGINT},
+      operating_profits = #{operatingProfits,jdbcType=BIGINT},
+      operating_income = #{operatingIncome,jdbcType=BIGINT},
+      netprofit = #{netprofit,jdbcType=BIGINT},
+      c_id = #{cId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mbg.TCompanyDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.mbg.TCompany">
+    <id column="c_id" jdbcType="VARCHAR" property="cId" />
+    <result column="c_location" jdbcType="VARCHAR" property="cLocation" />
+    <result column="time_to_market" jdbcType="TIMESTAMP" property="timeToMarket" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="c_industry" jdbcType="VARCHAR" property="cIndustry" />
+    <result column="c_tel" jdbcType="VARCHAR" property="cTel" />
+  </resultMap>
+
+  <resultMap id="IdNameMap" type="map">
+    <id column="c_id" jdbcType="VARCHAR" property="cId" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="IdNameMap">
+    select c_id, c_name from t_company
+  </select>
+
+  <select id="selectAllCname" resultType="java.lang.String">
+    select c_name from t_company
+  </select>
+
+  <!-- MyBatis generator -->
+  <sql id="Base_Column_List">
+    c_id, c_location, time_to_market, c_name, c_industry, c_tel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_company
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_company
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="c_id" keyProperty="cId" parameterType="com.example.demo.mbg.TCompany" useGeneratedKeys="true">
+    insert into t_company (c_location, time_to_market, c_name, 
+      c_industry, c_tel)
+    values (#{cLocation,jdbcType=VARCHAR}, #{timeToMarket,jdbcType=TIMESTAMP}, #{cName,jdbcType=VARCHAR}, 
+      #{cIndustry,jdbcType=VARCHAR}, #{cTel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="c_id" keyProperty="cId" parameterType="com.example.demo.mbg.TCompany" useGeneratedKeys="true">
+    insert into t_company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cLocation != null">
+        c_location,
+      </if>
+      <if test="timeToMarket != null">
+        time_to_market,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+      <if test="cIndustry != null">
+        c_industry,
+      </if>
+      <if test="cTel != null">
+        c_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cLocation != null">
+        #{cLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="timeToMarket != null">
+        #{timeToMarket,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cIndustry != null">
+        #{cIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="cTel != null">
+        #{cTel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mbg.TCompany">
+    update t_company
+    <set>
+      <if test="cLocation != null">
+        c_location = #{cLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="timeToMarket != null">
+        time_to_market = #{timeToMarket,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cName != null">
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cIndustry != null">
+        c_industry = #{cIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="cTel != null">
+        c_tel = #{cTel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mbg.TCompany">
+    update t_company
+    set c_location = #{cLocation,jdbcType=VARCHAR},
+      time_to_market = #{timeToMarket,jdbcType=TIMESTAMP},
+      c_name = #{cName,jdbcType=VARCHAR},
+      c_industry = #{cIndustry,jdbcType=VARCHAR},
+      c_tel = #{cTel,jdbcType=VARCHAR}
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </update>
+</mapper>
